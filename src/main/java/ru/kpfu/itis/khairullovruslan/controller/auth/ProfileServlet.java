@@ -12,7 +12,7 @@ import ru.kpfu.itis.khairullovruslan.service.UserService;
 
 import java.io.IOException;
 
-@WebServlet()
+@WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
     private UserService userService;
     @Override
