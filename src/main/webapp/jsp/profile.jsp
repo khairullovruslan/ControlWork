@@ -13,5 +13,10 @@
 </head>
 <body>
 ${login} - ${age}
+<form method="post" action="${pageContext.request.contextPath}/weather">
+    <label for="cityName">Введите название города</label>
+    <input type="text" name="cityName" id="cityName" required>
+    <button type="submit">получить погоду</button>
+</form>
 </body>
 </html>
