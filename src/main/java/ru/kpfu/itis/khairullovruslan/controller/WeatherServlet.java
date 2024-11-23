@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.khairullovruslan.dto.UserDTO;
+import ru.kpfu.itis.khairullovruslan.dto.WeatherDTO;
 import ru.kpfu.itis.khairullovruslan.service.CookieService;
 import ru.kpfu.itis.khairullovruslan.service.OpenWeatherMapService;
 import ru.kpfu.itis.khairullovruslan.service.WeatherLogsService;
@@ -31,20 +32,18 @@ public class WeatherServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/weather.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String cityName = req.getParameter("cityName");
+        System.out.println(cityName);
         UserDTO userDTO = cookieService.findUser(req);
         if (userDTO != null) {
-            req.setAttribute("weather", openWeatherMapService.getWeather(cityName));
+            WeatherDTO weatherDTO = openWeatherMapService.getWeather(cityName);
             weatherLogsService.save(userDTO.getLogin(), cityName);
-            req.setAttribute("cityName", cityName);
-            req.getRequestDispatcher("/jsp/weather.jsp").forward(req, resp);
+            resp.setContentType("text/plain");
+            resp.getWriter().write("В %s   %s градусов".formatted(cityName, weatherDTO.getMain().getTemp()));
         } else {
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
         }
+
+
     }
 }

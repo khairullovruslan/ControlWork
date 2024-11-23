@@ -10,13 +10,30 @@
 <html>
 <head>
     <title>профиль</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        $(document).on("click", "#ajax-button", function () {
+                console.log("Debug");
+                $.get("/weather?cityName=" + $('#cityName').val(), function (response) {
+                    $("#ajax-response").text(response)
+                })
+            }
+        )
+    </script>
 </head>
 <body>
 ${login} - ${age}
-<form method="post" action="${pageContext.request.contextPath}/weather">
+
+<div id="ajax-response">
+
+</div>
+
+<form>
     <label for="cityName">Введите название города</label>
     <input type="text" name="cityName" id="cityName" required>
-    <button type="submit">получить погоду</button>
+    <button id="ajax-button" type="button">получить погоду</button>
 </form>
+
+
 </body>
 </html>
