@@ -31,6 +31,7 @@ public final class DatabaseConnectionUtil {
                     PROD_DB_USERNAME,
                     PROD_DB_PASSWORD
             );
+            log.info("Всех братик, иди отдохни!");
 
 
         } catch(SQLException | ClassNotFoundException e){
